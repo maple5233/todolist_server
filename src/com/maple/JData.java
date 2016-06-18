@@ -12,6 +12,10 @@ public abstract class JData {
     JData(Socket soc, String Request) {
     }
 
+    public void setMSG(String MSG) {
+        this.msg = MSG;
+    }
+
     @Override
     public String toString() {
         Iterator<Entry<String, Integer>> intPairs = this.mapInt.entrySet().iterator();

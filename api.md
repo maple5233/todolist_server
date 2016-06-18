@@ -24,9 +24,11 @@ Success Response : {
 Error Response : {
     MSG  : "ERROR"
     Data : {
-        errorCode : int
+        code : int
     }
 }
+
+[Response的Data都是在原来的请求信息上附加的]
 
 ```
 
@@ -52,7 +54,7 @@ errorCode    error
     0        未知错误
     1        用户名已存在
     2        用户名格式非法(除字母数字下划线外的都视为非法，且为4到16位字符长度，以字母开头)
-    3        密码过短
+    3        用户密码长度不合法
     
 ```
 
@@ -121,7 +123,7 @@ Success Response : {
     Data : {
         title : String (备忘录标题)
         text  : String (备忘录描述)
-        src   : String (图片文件名)
+        src   : String (图片文件名) // 没有图片则src=""
     }
 }
 errorCode    error
@@ -149,8 +151,8 @@ Success Response : {
 }
 errorCode    error
     0        未知错误
-    1        用户识别码不正确
-    2        找不到内容
+    1        用户识别码不正确(找不到用户)
+    2        找不到内容(找不到图片)
     3        图片传输失败
   
 ```
