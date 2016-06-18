@@ -16,6 +16,8 @@ public class ConstString {
     static final String POST_TODOLIST_CONTENT = "POST_toDoListContent";
     static final String POST_TODOLIST_PIC = "POST_toDoListPic";
 
+    static final String DELETE_TODOLIST = "DELETE_toDoList";
+
     static final String PIC = "Pic";
 
     static final String SRC_TO_ROOT = "../../../";

@@ -8,8 +8,24 @@ public abstract class JData {
     Map<String, String> mapString = null;
     Map<String, Integer> mapInt = null;
     String msg = null;
+    Socket soc = null;
 
     JData(Socket soc, String Request) {
+        this.soc = soc;
+        String[] datas = Request.split("\n");
+        for (String str : datas) {
+            String key = str.split(":")[0];
+            String value = str.split(":")[1];
+            if (key.equals("") || value.equals(""))
+                continue;
+            if (key.equals("MSG")) {
+                this.msg = value;
+            } else if (key.equals("ISI") || key.equals("id")) {
+                this.mapInt.put(key, Integer.parseInt(value));
+            } else {
+                this.mapString.put(key, value);
+            }
+        }
     }
 
     public void setMSG(String MSG) {
@@ -35,6 +51,7 @@ public abstract class JData {
             response.append(entry.getValue());
             response.append("\n");
         }
+        // response.append("\n");
         return response.toString();
     }
 

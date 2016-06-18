@@ -96,15 +96,12 @@ Success Response : {
     MSG : "OK"
     Data : {
         toDolist  : [{
-            title : String
-            id    : int
+            title : id
         }]
     }
 }
 errorCode    error
     0        未知错误
-    1        用户识别码不正确
-    2        找不到内容
   
 ```
 
@@ -128,8 +125,7 @@ Success Response : {
 }
 errorCode    error
     0        未知错误
-    1        用户识别码不正常
-    2        找不到内容
+    1        该备忘录已经被删除
   
 ```
 
@@ -141,6 +137,7 @@ Requeset : {
     Data : {
         ISI ： int （用户识别码）
         id  :  int （备忘录是第几条)
+        src :  String (图片文件名)
     }
 }
 Success Response : {
@@ -163,12 +160,10 @@ errorCode    error
 Requeset : {
     MSG : "POST_toDoListContent"
     Data : {
-       ISI      ： int   （用户识别码）
-       userName : String （用户名）
+       ISI      ：int    （用户识别码）
        title    : String （备忘录标题）
        text     : String （备忘录描述）
        src      : String （图片文件名）
-       图片数据
     }
 }
 Success Response : {
@@ -179,8 +174,7 @@ Success Response : {
 }
 errorCode    error
     0        未知错误
-    1        用户识别码不正确
-  
+
 ```
 
 ```
@@ -192,19 +186,16 @@ Requeset : {
         ISI ： int     （用户识别码）
         id  :  int     （备忘录是第几条)
         src :  String  （图片文件名）
-        图片
     }
 }
 Success Response : {
     MSG : "OK"
     Data : {
-        
     }
 }
 errorCode    error
     0        未知错误
-    1        用户识别码不正确
-    2        图片传输失败
+    1        图片传输失败
   
 ```
 
@@ -238,15 +229,15 @@ Requeset : {
     Data : {
         ISI   ： int     （用户识别码）
         id    :  int     （备忘录是第几条)
-        title : String  (备忘录标题)
-        text  : String  (备忘录描述)
-        src   : String  (图片文件名)
+        title : String    (备忘录标题)
+        text  : String    (备忘录描述)
+        src   : String    (图片文件名)
     }
 }
 Success Response : {
     MSG : "OK"
     Data : {
-        
+        id    :  int    （备忘录是第几条)
     }
 }
 errorCode    error

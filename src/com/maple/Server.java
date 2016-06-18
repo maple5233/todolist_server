@@ -51,7 +51,7 @@ public class Server {
                 try {
                     Socket soc = queForsoc.take();// 试图从仓库里拿一个socket出来
 
-                    /* 读取请求 */
+                    /* 读取请求报文 */
                     InputStream in = soc.getInputStream();// 获取输入流
                     BufferedReader br = new BufferedReader(new InputStreamReader(in)); // 字节流
                     StringBuffer tmp = new StringBuffer();
@@ -81,6 +81,8 @@ public class Server {
                         handlePutToDoList(soc, request);
                     } else if (request.contains(ConstString.SIGNUP)) {
                         handleSignUp(soc, request);
+                    } else if (request.contains(ConstString.DELETE_TODOLIST)) {
+                        handleDel(soc, request);
                     } else {
                         System.out.println("未知请求:");
                         System.out.println(request);
@@ -110,10 +112,10 @@ public class Server {
             if (result == 0) {
                 user.setMSG("OK");
             }
-            out.write(user.toString().getBytes());
-            out.write('\n');
-            out.write(-1);
-            out.flush();
+            outputStream.write(user.toString().getBytes());
+            outputStream.write('\n');
+            outputStream.write(-1);
+            outputStream.flush();
         } catch (Exception e) {
             // TODO 自动生成的 catch 块
             e.printStackTrace();
@@ -134,7 +136,83 @@ public class Server {
             if (result == 0) {
                 user.setMSG("OK");
             }
-            out.write(user.toString().getBytes());
+            outputStream.write(user.toString().getBytes());
+            outputStream.write('\n');
+            outputStream.write(-1);
+            outputStream.flush();
+        } catch (Exception e) {
+            // TODO 自动生成的 catch 块
+            e.printStackTrace();
+        }
+    }
+
+    private static void handleGetToDoList(Socket soc, String request) {
+        // TODO 自动生成的方法存根
+        ToDoList toDoList = new ToDoList(soc, request);
+        toDoList.get();
+        toDoList.setMSG("OK");
+        try {
+            OutputStream outputStream = soc.getOutputStream();
+            outputStream.write(toDoList.toString().getBytes());
+            outputStream.write('\n');
+            outputStream.write(-1);
+            outputStream.flush();
+        } catch (IOException e) {
+            // TODO 自动生成的 catch 块
+            e.printStackTrace();
+        }
+    }
+
+    private static void handleGetToDoListContent(Socket soc, String request) {
+        // TODO 自动生成的方法存根
+        ToDoList toDoList = new ToDoList(soc, request);
+        int result = toDoList.getContent();
+        toDoList.setMSG("OK");
+        if (result != 0) {
+            toDoList.setMSG("ERROR");
+        }
+        try {
+            OutputStream outputStream = soc.getOutputStream();
+            outputStream.write(toDoList.toString().getBytes());
+            outputStream.write('\n');
+            outputStream.write(-1);
+            outputStream.flush();
+        } catch (IOException e) {
+            // TODO 自动生成的 catch 块
+            e.printStackTrace();
+        }
+    }
+
+    private static void handleGetToDoListPic(Socket soc, String request) {
+        // TODO 自动生成的方法存根
+        ToDoList toDoList = new ToDoList(soc, request);
+        toDoList.getPic();
+    }
+
+    private static void handlePostToDolistContent(Socket soc, String request) {
+        // TODO 自动生成的方法存根
+        ToDoList toDoList = new ToDoList(soc, request);
+        toDoList.postContent();
+        try {
+            OutputStream out = soc.getOutputStream();
+            out.write(toDoList.toString().getBytes());
+            out.write('\n');
+            out.write(-1);
+            out.flush();
+        } catch (IOException e) {
+            // TODO 自动生成的 catch 块
+            e.printStackTrace();
+        }
+    }
+
+    private static void handlePostToDoListPic(Socket soc, String request) {
+        // TODO 自动生成的方法存根
+        ToDoList toDoList = new ToDoList(soc, request);
+        toDoList.postPic();
+        toDoList.setMSG("OK");
+        try {
+            OutputStream out = soc.getOutputStream();
+            out.write(toDoList.toString().getBytes());
             out.write('\n');
             out.write(-1);
             out.flush();
@@ -144,33 +222,29 @@ public class Server {
         }
     }
 
-    private static void handleGetToDoList(Socket soc, String request) {
-        // TODO 自动生成的方法存根
-
-    }
-
     private static void handlePutToDoList(Socket soc, String request) {
         // TODO 自动生成的方法存根
-
+        ToDoList toDoList = new ToDoList(soc, request);
+        toDoList.putToDolist();
     }
 
-    private static void handlePostToDoListPic(Socket soc, String request) {
+    private static void handleDel(Socket soc, String request) {
         // TODO 自动生成的方法存根
-
-    }
-
-    private static void handlePostToDolistContent(Socket soc, String request) {
-        // TODO 自动生成的方法存根
-
-    }
-
-    private static void handleGetToDoListPic(Socket soc, String request) {
-        // TODO 自动生成的方法存根
-
-    }
-
-    private static void handleGetToDoListContent(Socket soc, String request) {
-        // TODO 自动生成的方法存根
-
+        ToDoList toDoList = new ToDoList(soc, request);
+        int result = toDoList.delToDoList();
+        toDoList.setMSG("ERROR");
+        if (result == 0) {
+            toDoList.setMSG("OK");
+        }
+        try {
+            OutputStream out = soc.getOutputStream();
+            out.write(toDoList.toString().getBytes());
+            out.write('\n');
+            out.write(-1);
+            out.flush();
+        } catch (IOException e) {
+            // TODO 自动生成的 catch 块
+            e.printStackTrace();
+        }
     }
 }
